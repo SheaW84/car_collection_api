@@ -16,4 +16,4 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), nullable=False)
     password = db.Column(db.String, nullable=True, default='')
     token = db.Column(db.String, default='', unique = True)
-    date_created = db.Column(db.Datetime, nullable = False, default = datetime.utcnow)
+    date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
