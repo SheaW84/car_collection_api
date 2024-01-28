@@ -7,7 +7,7 @@ from flask_login import login_user, logout_user, LoginManager, current_user, log
 auth = Blueprint('auth', __name__, template_folder='auth_templates')
 
 @auth.route('/sign_up', methods = ['GET','POST'])
-def signup():
+def sign_up():
     form = UserLoginForm()
 
     try:
