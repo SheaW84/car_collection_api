@@ -26,3 +26,30 @@ def sign_up():
     except:
         raise Exception('Invalid form data: Please check your form')
     return render_template('sign_up.html', form=form)
+
+@auth.route('/login', methods =['GET','POST'])
+def login():
+    form = UserLoginForm()
+
+    try:
+        if request.method == 'POST' and form.validate_on_submit():
+            email = form.email.data
+            password = form.password.data
+            print(email,password)
+
+            logged_user = User.query.filter(User.email == email).first()
+            if logged_user and check_password_hash(logged_user.password, password):
+                login_user(logged_user)
+                flash('You logged in successfully!','auth-success')
+                return redirect(url_for('site.profile'))
+            else:
+                flash('Your credentials couldn not be verified','auth-failed')
+    except:
+        raise Exception('Invalid data')
+    return render_template('login.html', form=form)
+
+@auth.route('/logout')
+def logout():
+    logout_user()
+    flash("You've been logged out")
+    return redirect(url_for('site.home'))
